@@ -58,8 +58,8 @@ public class BulletController : PooledBehaviour
     public override void OnTaken<T>(T t)
     {
         if (!(t is Transform)) return;
-        
-        transform.LookAt((t as Transform));
+               
+        //transform.LookAt((t as Transform));
         Fire();
     }
 }

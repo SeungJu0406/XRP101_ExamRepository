@@ -19,9 +19,19 @@ public class TurretController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Player"))
         {
             Fire(other.transform);
+        }
+    }   
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log(1);
+            StopFire();   
         }
     }
 
@@ -37,15 +47,21 @@ public class TurretController : MonoBehaviour
         while (true)
         {
             yield return _wait;
-            
+
+            if (target.gameObject.activeSelf ==false) // 죽었으면 그만 쏘기
+            {
+                yield break;
+            }
+
             transform.rotation = Quaternion.LookRotation(new Vector3(
                 target.position.x,
                 0,
                 target.position.z)
             );
-            
+
             PooledBehaviour bullet = _bulletPool.TakeFromPool();
             bullet.transform.position = _muzzlePoint.position;
+            bullet.transform.rotation = _muzzlePoint.rotation; // 불릿에 회전값 추가
             bullet.OnTaken(target);
             
         }
@@ -53,6 +69,18 @@ public class TurretController : MonoBehaviour
 
     private void Fire(Transform target)
     {
-        _coroutine = StartCoroutine(FireRoutine(target));
+        if (_coroutine == null)
+        {
+            _coroutine = StartCoroutine(FireRoutine(target));
+        }
+    }
+
+    private void StopFire()
+    {
+        if(_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
     }
 }
