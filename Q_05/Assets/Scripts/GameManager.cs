@@ -12,6 +12,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         SingletonInit();
         Score = 0.1f;
     }
+    /// <summary>
+    /// 다시 타임스케일 1로 바꿔주는 메서드
+    /// </summary>
+    public void Continue() 
+    {
+        Time.timeScale = 1f;
+    }
 
     public void Pause()
     {
