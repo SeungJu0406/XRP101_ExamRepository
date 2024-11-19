@@ -31,8 +31,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Die()
+    {             
+        StartCoroutine(DieRoutine());
+    }
+    /// <summary>
+    /// 죽었을 때 루틴
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DieRoutine()
     {
-        _audio.Play();
+        // 사운드 재생
+        _audio.PlayOneShot(_audio.clip);
+        yield return new WaitForSeconds(_audio.clip.length); // 사운드 시간
         gameObject.SetActive(false);
     }
 }
