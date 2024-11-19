@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public int Hp { get; private set; }
 
     private AudioSource _audio;
+    private Coroutine _dieRoutine;
 
     private void Awake()
     {
@@ -26,13 +27,17 @@ public class PlayerController : MonoBehaviour
 
         if (Hp <= 0)
         {
+            Hp = 0;
             Die();
         }
     }
 
     public void Die()
-    {             
-        StartCoroutine(DieRoutine());
+    {
+        if (_dieRoutine == null)
+        {
+           _dieRoutine = StartCoroutine(DieRoutine());
+        }
     }
     /// <summary>
     /// 죽었을 때 루틴
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
         // 사운드 재생
         _audio.PlayOneShot(_audio.clip);
         yield return new WaitForSeconds(_audio.clip.length); // 사운드 시간
+        _dieRoutine = null;
         gameObject.SetActive(false);
     }
 }
