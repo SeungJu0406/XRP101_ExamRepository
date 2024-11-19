@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PopupController : MonoBehaviour
 {
     [SerializeField] private float _deactiveTime;
-    private WaitForSeconds _wait;
+    private WaitForSecondsRealtime _wait; // WaitForSeconds 가 아닌 실제 시간 기준으로 바꾸어서 Time.timeScale = 0 상태 극복 
     private Button _popupButton;
+   
 
     [SerializeField] private GameObject _popup;
 
@@ -18,7 +19,7 @@ public class PopupController : MonoBehaviour
 
     private void Init()
     {
-        _wait = new WaitForSeconds(_deactiveTime);
+        _wait = new WaitForSecondsRealtime(_deactiveTime);
         _popupButton = GetComponent<Button>();
         SubscribeEvent();
     }
@@ -31,13 +32,15 @@ public class PopupController : MonoBehaviour
     private void Activate()
     {
         _popup.gameObject.SetActive(true);
-        GameManager.Intance.Pause();
+        GameManager.Instance.Pause();
         StartCoroutine(DeactivateRoutine());
     }
 
     private void Deactivate()
     {
         _popup.gameObject.SetActive(false);
+        //타임 다시 1로 변경
+        GameManager.Instance.Continue();
     }
 
     private IEnumerator DeactivateRoutine()
