@@ -18,4 +18,11 @@
 제시된 프로젝트에서 발생하는 `문제들을 모두 서술`하고 올바르게 동작하도록 `소스코드를 개선`하시오.
 
 ## 답안
-- 
+
+- 문제1 :
+	- SheldeMonster에게 까지 데미지를 입히려고하고있음
+	- SheldeMonster는 IDamagable이 없음. 레퍼런스 오류 발생
+	- IDamagable이 null 값이면 그냥 continue 처리해줘야 할 필요가 있음
+- 문제2:
+	- StateAttack의 Exit에서 Idle 상태로 전환 하는 과정에서 계속 Exit 에서 Idle 상태가 호출되다 보니 스택오버플로 상태
+	- Exit에서 Idle상태로 나가는 것이 아닌 직접 Idle 상태로 전환해줄 필요가 있어보임
