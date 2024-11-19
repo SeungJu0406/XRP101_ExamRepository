@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         direction.z = Input.GetAxisRaw("Vertical");
 
         if (direction == Vector3.zero) return;
+        direction.Normalize(); // 벡터값 일반화 추가
         
         transform.Translate(_status.MoveSpeed * Time.deltaTime * direction);
     }
