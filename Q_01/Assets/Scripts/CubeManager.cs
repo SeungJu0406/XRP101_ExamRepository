@@ -11,10 +11,10 @@ public class CubeManager : MonoBehaviour
 
     private void Awake()
     {
-        SetCubePosition(3, 0, 3);
+        SetCubePosition(3, 0, 3); 
     }
 
-    private void Start()
+    private void Start()    
     {
         CreateCube();
     }
@@ -24,13 +24,13 @@ public class CubeManager : MonoBehaviour
         _cubeSetPoint.x = x;
         _cubeSetPoint.y = y;
         _cubeSetPoint.z = z;
-        _cubeController.SetPosition();
+        //_cubeController.SetPosition();
     }
 
     private void CreateCube()
     {
-        GameObject cube = Instantiate(_cubePrefab);
+        GameObject cube = Instantiate(_cubePrefab, _cubeSetPoint, Quaternion.identity);
         _cubeController = cube.GetComponent<CubeController>();
-        _cubeSetPoint = _cubeController.SetPoint;
+        //_cubeSetPoint = _cubeController.SetPoint;
     }
 }
