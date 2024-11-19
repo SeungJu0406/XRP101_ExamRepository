@@ -32,7 +32,7 @@ public class StateAttack : PlayerState
 
     public override void Exit()
     {
-        Machine.ChangeState(StateType.Idle);
+        
     }
 
     private void Attack()
@@ -46,6 +46,8 @@ public class StateAttack : PlayerState
         foreach (Collider col in cols)
         {
             damagable = col.GetComponent<IDamagable>();
+            if (damagable == null) // 데미지를 줄 수 없는 대상은 패스
+                continue;
             damagable.TakeHit(Controller.AttackValue);
         }
     }
@@ -55,7 +57,7 @@ public class StateAttack : PlayerState
         yield return _wait;
 
         Attack();
-        Exit();
+        Machine.ChangeState(StateType.Idle); // 직접 Idle 상태로 전환
     }
 
 }
