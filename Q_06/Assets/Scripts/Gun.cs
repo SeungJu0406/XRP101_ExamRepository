@@ -7,10 +7,14 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] private float _range;
     [SerializeField] private LayerMask _targetLayer;
-    
+
+    private void Awake()
+    {
+        _targetLayer = 1 << LayerMask.NameToLayer("Enemy");
+    }
     public void Fire(Transform origin)
     {
-        Ray ray = new(origin.position, Vector3.forward);
+        Ray ray = new(origin.position, origin.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, _range, _targetLayer))
